@@ -26,9 +26,8 @@ namespace AlgoritmsLaba2
         }
         public T Data { get; set; }
         public Node<T> Next { get; set; }
-        public object Re { get; internal set; }
     }
-    public class LinkedList<T> : IEnumerable<T>  // односвязный список
+    public class LinkedList<T> : IEnumerable<T> // односвязный список
     {
         Node<T> head; // первый элемент
         Node<T> tail; // последний элемент
@@ -68,7 +67,7 @@ namespace AlgoritmsLaba2
             count++;
         }
         // удаление элемента
-        public bool Remove(Node<T> data)
+        public bool Remove(T data)
         {
             Node<T> current = head;
             Node<T> previous = null;
@@ -156,19 +155,50 @@ namespace AlgoritmsLaba2
         }
         public void Move(int index, int n)
         {
-            Node<T> node = null;
+            Node<T> node = null;          
             Node<T> current = head;
+            Node<T> previous = null;
             int i = 0;
-            while (index != i)
+            int remember = 0;
+            
+            while (current != null)
             {
-                i++;
+                if(index == i)
+                {
+                    node = current;
+                    remember = i;
+                    // Если узел в середине или в конце
+                    if (previous != null)
+                    {
+                        previous.Next = current.Next;
+                        if (current.Next == null)
+                            tail = previous;
+                    }
+                    else
+                    {
+                        // если удаляется первый элемент
+                        // переустанавливаем значение head
+                        head = head.Next;
+
+                        // если после удаления список пуст, сбрасываем tail
+                        if (head == null)
+                            tail = null;
+                    }
+                    current = previous;
+                    count--;
+                   
+                }
+                    i++;
+                previous = current;
                 current = current.Next;
             }
-            node = current;
-            Remove(current);
-            if(n>0&n<Count-i)
-            {
-                Insert(node, n);
+     
+            if (n>0&n<=Count-remember+1)
+            {                            
+                Node<T> next = null;         
+                next = current.Next;
+                current.Next = node;
+                node.Next = next;
             }
         }
     }
@@ -178,6 +208,31 @@ namespace AlgoritmsLaba2
     {
         static void Main(string[] args)
         {
+            LinkedList<string> linkedList = new LinkedList<string>();
+            // добавление элементов
+            linkedList.Add("Tom");
+            linkedList.Add("Alice");
+            linkedList.Add("Bob");
+            linkedList.Add("Sam");
+
+            // выводим элементы
+            foreach (var item in linkedList)
+            {
+                Console.WriteLine(item);
+            }
+            // удаляем элемент          
+            // проверяем наличие элемента
+            //bool isPresent = linkedList.Contains("Sam");
+            //Console.WriteLine(isPresent == true ? "Sam присутствует" : "Sam отсутствует");
+            Console.WriteLine("_________________");
+            // добавляем элемент в начало            
+           // linkedList.AppendFirst("Bill");
+            linkedList.Move(1, 1);
+            foreach (var item in linkedList)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadKey();
         }
     }
 }
