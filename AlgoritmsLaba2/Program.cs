@@ -1,6 +1,6 @@
 ﻿//Реалізувати структуру однозв’язного списку.Для виконання операцій з елементами заданої структури створити функції, які додатково реалізують:
-//- пересування елемента на n позицій;
-//- створення копії списку;
+//- !готово!пересування елемента на n позицій;
+//- !готово!створення копії списку;
 //- !готово!додавання елементу в початок списку;
 //- склеювання двох списків;
 //- видалення n-го елементу з списку;
@@ -29,7 +29,7 @@ namespace AlgoritmsLaba2
         public object Re { get; internal set; }
     }
 
-    public class LinkedList<T> : IEnumerable<T> where T: // IInterface // односвязный список
+    public class LinkedList<T> : IEnumerable<T> //where T: // IInterface // односвязный список
     {
         Node<T> head; // первый элемент
         Node<T> tail; // последний элемент
@@ -52,6 +52,7 @@ namespace AlgoritmsLaba2
                 next = current.Next;
                 current.Next = node;
                 node.Next = next;
+                count++;
 
         }    
         
@@ -71,46 +72,44 @@ namespace AlgoritmsLaba2
         // удаление элемента
         public bool Remove(T data)
         {
-            //Node<T> current = head;
-            //Node<T> previous = null;
+            Node<T> current = head;
+            Node<T> previous = null;
 
-            //while (current != null)
-            //{
-            //    if (current.Data.Equals(data))
-            //    {
-            //        // Если узел в середине или в конце
-            //        if (previous != null)
-            //        {
-            //            // убираем узел current, теперь previous ссылается не на current, а на current.Next
-            //            previous.Next = current.Next;
+            while (current != null)
+            {
+                if (current.Data.Equals(data))
+                {
+                    // Если узел в середине или в конце
+                    if (previous != null)
+                    {
+                        // убираем узел current, теперь previous ссылается не на current, а на current.Next
+                        previous.Next = current.Next;
 
-            //            // Если current.Next не установлен, значит узел последний,
-            //            // изменяем переменную tail
-            //            if (current.Next == null)
-            //                tail = previous;
-            //        }
-            //        else
-            //        {
-            //            // если удаляется первый элемент
-            //            // переустанавливаем значение head
-            //            head = head.Next;
+                        // Если current.Next не установлен, значит узел последний,
+                        // изменяем переменную tail
+                        if (current.Next == null)
+                            tail = previous;
+                    }
+                    else
+                    {
+                        // если удаляется первый элемент
+                        // переустанавливаем значение head
+                        head = head.Next;
 
-            //            // если после удаления список пуст, сбрасываем tail
-            //            if (head == null)
-            //                tail = null;
-            //        }
-            //        count--;
-            //        return true;
-            //    }
+                        // если после удаления список пуст, сбрасываем tail
+                        if (head == null)
+                            tail = null;
+                    }
+                    count--;
+                    return true;
+                }
 
-            //    previous = current;
-            //    current = current.Next;
-            //}
-            //return false;
+                previous = current;
+                current = current.Next;
+            }
+            return false;
 
-            Node<T> current = this.head;
 
-            while(current.Data  data)
         }
 
         public int Count { get { return count; } }
@@ -170,19 +169,102 @@ namespace AlgoritmsLaba2
                 current = current.Next;
             }
             node = current;
-            Remove(current);
-            if(n>0&n<Count-i)
+            Remove(current.Data);
+            if (n > 0 & n < Count)
             {
                 Insert(node.Data, n);
             }
+
         }
-    }
+        public LinkedList<T> Copy()
+        {
+            LinkedList<T> newList = new LinkedList<T>();
+            foreach (var item in this)
+            {
+                newList.Add(item);
+            }
+            return newList;
+        }
+        public Node<T> Step(int n)
+        {
+            Node<T> node = head;
+
+            for (int i = 0; i < n; ++i)
+            {
+                if (node == null)
+                    break;
+
+                node = node.Next;
+            }
+
+            return node;
+        }
+        public LinkedList<T> Connect(LinkedList<T> list1)
+        {
+            LinkedList<T> newList = new LinkedList<T>();
+            foreach (var item in this)
+            {
+                newList.Add(item);
+            }
+            foreach (var item in list1)
+            {
+                newList.Add(item);
+            }
+            return newList;
+        }
+    }   
 
    
     class Program
     {
         static void Main(string[] args)
         {
+           
+            LinkedList<string> linkedList = new LinkedList<string>();
+            void ShowThelist()
+            {
+                foreach (var item in linkedList)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+            // добавление элементов
+            linkedList.Add("Tom");
+            linkedList.Add("Alice");
+            linkedList.Add("Bob");
+            linkedList.Add("Sam");
+
+            // выводим элементы
+            ShowThelist();
+            Console.WriteLine("____________________");
+            linkedList.Insert("John", 3);
+            ShowThelist();
+            Console.WriteLine("____________________");
+            linkedList.Insert("Walfey", 3);
+            ShowThelist();
+            Console.WriteLine("____________________");
+            linkedList.Move(1, 2);
+            ShowThelist();
+            Console.WriteLine("_________________");
+            linkedList.Move(3, 4);
+            ShowThelist();
+                Console.WriteLine("__________SOMETEST___________");
+            LinkedList<string> linkedList1 = new LinkedList<string>();
+            linkedList.Copy();
+            linkedList1 = linkedList.Copy();
+            foreach (var item in linkedList1)
+            {
+                Console.WriteLine(item);
+            }
+            linkedList1.Add("Matthew");
+            Console.WriteLine("NEW LIST_____________");
+            foreach (var item in linkedList1)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine("OLD LIST_____________");
+            ShowThelist();
+            Console.ReadKey();
         }
     }
 }
