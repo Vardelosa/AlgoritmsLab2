@@ -28,7 +28,8 @@ namespace AlgoritmsLaba2
         public Node<T> Next { get; set; }
         public object Re { get; internal set; }
     }
-    public class LinkedList<T> : IEnumerable<T>  // односвязный список
+
+    public class LinkedList<T> : IEnumerable<T> where T: // IInterface // односвязный список
     {
         Node<T> head; // первый элемент
         Node<T> tail; // последний элемент
@@ -68,44 +69,48 @@ namespace AlgoritmsLaba2
             count++;
         }
         // удаление элемента
-        public bool Remove(Node<T> data)
+        public bool Remove(T data)
         {
-            Node<T> current = head;
-            Node<T> previous = null;
+            //Node<T> current = head;
+            //Node<T> previous = null;
 
-            while (current != null)
-            {
-                if (current.Data.Equals(data))
-                {
-                    // Если узел в середине или в конце
-                    if (previous != null)
-                    {
-                        // убираем узел current, теперь previous ссылается не на current, а на current.Next
-                        previous.Next = current.Next;
+            //while (current != null)
+            //{
+            //    if (current.Data.Equals(data))
+            //    {
+            //        // Если узел в середине или в конце
+            //        if (previous != null)
+            //        {
+            //            // убираем узел current, теперь previous ссылается не на current, а на current.Next
+            //            previous.Next = current.Next;
 
-                        // Если current.Next не установлен, значит узел последний,
-                        // изменяем переменную tail
-                        if (current.Next == null)
-                            tail = previous;
-                    }
-                    else
-                    {
-                        // если удаляется первый элемент
-                        // переустанавливаем значение head
-                        head = head.Next;
+            //            // Если current.Next не установлен, значит узел последний,
+            //            // изменяем переменную tail
+            //            if (current.Next == null)
+            //                tail = previous;
+            //        }
+            //        else
+            //        {
+            //            // если удаляется первый элемент
+            //            // переустанавливаем значение head
+            //            head = head.Next;
 
-                        // если после удаления список пуст, сбрасываем tail
-                        if (head == null)
-                            tail = null;
-                    }
-                    count--;
-                    return true;
-                }
+            //            // если после удаления список пуст, сбрасываем tail
+            //            if (head == null)
+            //                tail = null;
+            //        }
+            //        count--;
+            //        return true;
+            //    }
 
-                previous = current;
-                current = current.Next;
-            }
-            return false;
+            //    previous = current;
+            //    current = current.Next;
+            //}
+            //return false;
+
+            Node<T> current = this.head;
+
+            while(current.Data  data)
         }
 
         public int Count { get { return count; } }
@@ -168,7 +173,7 @@ namespace AlgoritmsLaba2
             Remove(current);
             if(n>0&n<Count-i)
             {
-                Insert(node, n);
+                Insert(node.Data, n);
             }
         }
     }
