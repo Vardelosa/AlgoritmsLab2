@@ -2,12 +2,12 @@
 //- !готово!пересування елемента на n позицій;
 //- !готово!створення копії списку;
 //- !готово!додавання елементу в початок списку;
-//- склеювання двох списків;
-//- видалення n-го елементу з списку;
+//- !готово!склеювання двох списків;
+//- !готово!видалення n-го елементу з списку;
 //- !готово!вставлення елементу після n-го елементу списку;
 //- створення списку, який містить спільні елементи двох списків;
 //- впорядкувати елементи в списку за зростанням(спаданням);
-//- видалення кожного n-го елементу списку;
+//- !готово!видалення кожного n-го елементу списку;
 //- !готово!очищення списку.
 using System;
 using System.Collections;
@@ -74,7 +74,6 @@ namespace AlgoritmsLaba2
         {
             Node<T> current = head;
             Node<T> previous = null;
-
             while (current != null)
             {
                 if (current.Data.Equals(data))
@@ -108,10 +107,59 @@ namespace AlgoritmsLaba2
                 current = current.Next;
             }
             return false;
-
-
         }
-
+        public bool Remove(int n)
+        {
+            Node<T> current = head;
+            Node<T> previous = null;
+            int i = 0;
+            while (current != null)
+            {
+                if (n < 0)
+                    n = 0;
+                if (n > count)
+                    n = count-1;
+                if (i==n)
+                {
+                    if (previous != null)
+                    {
+                        previous.Next = current.Next;
+                        if (current.Next == null)
+                            tail = previous;
+                    }
+                    else
+                    {
+                        head = head.Next;
+                        if (head == null)
+                            tail = null;
+                    }
+                    count--;
+                    return true;
+                }
+                ++i;
+                previous = current;
+                current = current.Next;
+            }
+            return false;
+        }
+        public void Remove_Each(int n)
+        {
+            if (n == 1)
+            {
+                Clear();
+            }
+            else
+            {
+                n = n - 1;
+                for (int i = 1; i < count; i++)
+                {
+                    if (i % n == 0)
+                    {
+                        Remove(i);
+                    }
+                }
+            }
+        }
         public int Count { get { return count; } }
         public bool IsEmpty { get { return count == 0; } }
         // очистка списка
@@ -199,18 +247,10 @@ namespace AlgoritmsLaba2
 
             return node;
         }
-        public LinkedList<T> Connect(LinkedList<T> list1)
+        public static void Connect(LinkedList<T> list1, LinkedList<T> list2)
         {
-            LinkedList<T> newList = new LinkedList<T>();
-            foreach (var item in this)
-            {
-                newList.Add(item);
-            }
-            foreach (var item in list1)
-            {
-                newList.Add(item);
-            }
-            return newList;
+            Node<T> node = list1.Step(list1.Count - 1);
+            node.Next = list2.head;
         }
     }   
 
@@ -233,37 +273,56 @@ namespace AlgoritmsLaba2
             linkedList.Add("Alice");
             linkedList.Add("Bob");
             linkedList.Add("Sam");
+            linkedList.Add("Tom");
+            linkedList.Add("Alice");
+            linkedList.Add("Bob");
+            linkedList.Add("Sam");
+            linkedList.Add("Tom");
+            linkedList.Add("Alice");
+            linkedList.Add("Bob");
+            linkedList.Add("Sam");
+            ShowThelist();
+            Console.WriteLine("______________________");
+            linkedList.Remove_Each(1);
+            ShowThelist();
+//Console.WriteLine("Delete on DATA");
+//            linkedList.Remove("Alice");
+//            ShowThelist();
+//            Console.WriteLine("DELETE on index");
+//            linkedList.Remove(100);
+//            ShowThelist();
+            //// выводим элементы
+            //ShowThelist();
+            //Console.WriteLine("____________________");
+            //linkedList.Insert("John", 3);
+            //ShowThelist();
+            //Console.WriteLine("____________________");
+            //linkedList.Insert("Walfey", 3);
+            //ShowThelist();
+            //Console.WriteLine("____________________");
+            //linkedList.Move(1, 2);
+            //ShowThelist();
+            //Console.WriteLine("_________________");
+            //linkedList.Move(3, 4);
+            //ShowThelist();
+            //    Console.WriteLine("__________SOMETEST___________");
+            //LinkedList<string> linkedList1 = new LinkedList<string>();
+            //linkedList.Copy();
+            //linkedList1 = linkedList.Copy();
+            //foreach (var item in linkedList1)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            //linkedList1.Add("Matthew");
+            //Console.WriteLine("NEW LIST_____________");
+            //foreach (var item in linkedList1)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            //Console.WriteLine("OLD LIST_____________");
+            //ShowThelist();
+            
 
-            // выводим элементы
-            ShowThelist();
-            Console.WriteLine("____________________");
-            linkedList.Insert("John", 3);
-            ShowThelist();
-            Console.WriteLine("____________________");
-            linkedList.Insert("Walfey", 3);
-            ShowThelist();
-            Console.WriteLine("____________________");
-            linkedList.Move(1, 2);
-            ShowThelist();
-            Console.WriteLine("_________________");
-            linkedList.Move(3, 4);
-            ShowThelist();
-                Console.WriteLine("__________SOMETEST___________");
-            LinkedList<string> linkedList1 = new LinkedList<string>();
-            linkedList.Copy();
-            linkedList1 = linkedList.Copy();
-            foreach (var item in linkedList1)
-            {
-                Console.WriteLine(item);
-            }
-            linkedList1.Add("Matthew");
-            Console.WriteLine("NEW LIST_____________");
-            foreach (var item in linkedList1)
-            {
-                Console.WriteLine(item);
-            }
-            Console.WriteLine("OLD LIST_____________");
-            ShowThelist();
             Console.ReadKey();
         }
     }
