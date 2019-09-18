@@ -252,6 +252,16 @@ namespace AlgoritmsLaba2
             Node<T> node = list1.Step(list1.Count - 1);
             node.Next = list2.head;
         }
+        public void Find_Equal(LinkedList<T> list1, LinkedList<T> list2)
+        {
+            for(int i=0; i<list1.Count;i++)
+            {
+                for (int j = 0; i < list2.Count; i++)
+                {
+
+                }
+            }
+        }
     }   
 
    
@@ -285,6 +295,7 @@ namespace AlgoritmsLaba2
             Console.WriteLine("______________________");
             linkedList.Remove_Each(1);
             ShowThelist();
+            
 //Console.WriteLine("Delete on DATA");
 //            linkedList.Remove("Alice");
 //            ShowThelist();
