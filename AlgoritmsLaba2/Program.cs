@@ -5,7 +5,7 @@
 //- !готово!склеювання двох списків;
 //- !готово!видалення n-го елементу з списку;
 //- !готово!вставлення елементу після n-го елементу списку;
-//- створення списку, який містить спільні елементи двох списків;
+//- !готово!створення списку, який містить спільні елементи двох списків;
 //- впорядкувати елементи в списку за зростанням(спаданням);
 //- !готово!видалення кожного n-го елементу списку;
 //- !готово!очищення списку.
@@ -252,15 +252,20 @@ namespace AlgoritmsLaba2
             Node<T> node = list1.Step(list1.Count - 1);
             node.Next = list2.head;
         }
-        public void Find_Equal(LinkedList<T> list1, LinkedList<T> list2)
+        public LinkedList<T> Find_Equal(LinkedList<T> list2)
         {
-            for(int i=0; i<list1.Count;i++)
+            LinkedList<T> newList = new LinkedList<T>();
+            foreach(var item in this)
             {
-                for (int j = 0; i < list2.Count; i++)
+                foreach(var item1 in list2)
                 {
-
+                    if(item.Equals(item1))
+                    {
+                        newList.Add(item);
+                    }
                 }
             }
+            return newList;
         }
     }   
 
@@ -271,6 +276,8 @@ namespace AlgoritmsLaba2
         {
            
             LinkedList<string> linkedList = new LinkedList<string>();
+            LinkedList<string> linkedList1 = new LinkedList<string>();
+            LinkedList<string> linkedList2 = new LinkedList<string>();
             void ShowThelist()
             {
                 foreach (var item in linkedList)
@@ -282,16 +289,21 @@ namespace AlgoritmsLaba2
             linkedList.Add("Tom");
             linkedList.Add("Alice");
             linkedList.Add("Bob");
-            linkedList.Add("Sam");
-            linkedList.Add("Tom");
-            linkedList.Add("Alice");
-            linkedList.Add("Bob");
-            linkedList.Add("Sam");
-            linkedList.Add("Tom");
-            linkedList.Add("Alice");
-            linkedList.Add("Bob");
-            linkedList.Add("Sam");
-            ShowThelist();
+            linkedList1.Add("Sam");
+            linkedList1.Add("Tom");
+            linkedList1.Add("Alice");
+            linkedList2 = linkedList.Find_Equal(linkedList1);
+            foreach (var item in linkedList2)
+            {
+                Console.WriteLine(item);
+            }
+            //linkedList.Add("Bob");
+            //linkedList.Add("Sam");
+            //linkedList.Add("Tom");
+            //linkedList.Add("Alice");
+            //linkedList.Add("Bob");
+            //linkedList.Add("Sam");
+            //ShowThelist();
             Console.WriteLine("______________________");
             linkedList.Remove_Each(1);
             ShowThelist();
