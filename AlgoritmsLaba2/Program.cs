@@ -268,85 +268,106 @@ namespace AlgoritmsLaba2
             return newList;
         }
     }   
-
+    struct Footballer
+    {
+        public string surname;
+        public Footballer(string surname)
+        {
+            this.surname = surname;
+        }
+        public void Printfootballer()
+        {
+            Console.WriteLine(surname);
+        }
+    }
    
     class Program
     {
         static void Main(string[] args)
         {
            
-            LinkedList<string> linkedList = new LinkedList<string>();
-            LinkedList<string> linkedList1 = new LinkedList<string>();
-            LinkedList<string> linkedList2 = new LinkedList<string>();
-            void ShowThelist()
+            LinkedList<Footballer> main_team = new LinkedList<Footballer>();
+            LinkedList<Footballer> help_team = new LinkedList<Footballer>();
+            Footballer[] footballers_main = new Footballer[3];
+            Footballer[] footballers_help = new Footballer[3];
+            footballers_main[0] = new Footballer("Aksenov");
+            footballers_main[1] = new Footballer("Fedotov");
+            footballers_main[2] = new Footballer("Kravchuk");
+            footballers_help[0] = new Footballer("Yarmulin");
+            footballers_help[1] = new Footballer("Kinohin");
+            footballers_help[2] = new Footballer("Savin");
+            for(int i=0;i<3;i++)
             {
-                foreach (var item in linkedList)
+                main_team.Add(footballers_main[i]);
+                help_team.Add(footballers_help[i]);
+            }
+            ShowTheMainTeam();
+            ShowTheHelpTeam();
+            Console.WriteLine("How many changes do you want to make?");
+            int k = Convert.ToInt32(Console.ReadLine());
+            for(int i=0;i<k;i++)
+            {
+                Console.WriteLine("Enter index of the person in the main team");
+                int ind = Convert.ToInt32(Console.ReadLine())-1;
+                if (ind > 2)
+                    ind = 2;
+                if (ind < 0)
+                    ind = 0;
+                Console.WriteLine("Enter index of the person in the help team");
+                int ind1 = Convert.ToInt32(Console.ReadLine())-1;
+                if (ind1 > 2)
+                    ind1 = 2;
+                if (ind1 < 0)
+                    ind1 = 0;
+                main_team.Remove(ind);
+                help_team.Remove(ind1);
+            for (int j = 0; j < 3; j++)
                 {
-                    Console.WriteLine(item);
+                if(j==ind)
+                {
+                    if (j == 0)
+                        main_team.AppendFirst(footballers_help[j]);
+                    else
+                    main_team.Insert(footballers_help[j], ind-1);
                 }
+                if(j==ind1)
+                {
+                    if (j == 0)
+                        help_team.AppendFirst(footballers_main[j]);
+                    else
+                    help_team.Insert(footballers_main[j], ind1-1);
+                }
+
+                }
+                Console.Clear();
+                ShowTheMainTeam();
+                ShowTheHelpTeam();
+
             }
-            // добавление элементов
-            linkedList.Add("Tom");
-            linkedList.Add("Alice");
-            linkedList.Add("Bob");
-            linkedList1.Add("Sam");
-            linkedList1.Add("Tom");
-            linkedList1.Add("Alice");
-            linkedList2 = linkedList.Find_Equal(linkedList1);
-            foreach (var item in linkedList2)
-            {
-                Console.WriteLine(item);
-            }
-            //linkedList.Add("Bob");
-            //linkedList.Add("Sam");
-            //linkedList.Add("Tom");
-            //linkedList.Add("Alice");
-            //linkedList.Add("Bob");
-            //linkedList.Add("Sam");
-            //ShowThelist();
-            Console.WriteLine("______________________");
-            linkedList.Remove_Each(1);
-            ShowThelist();
-            
-//Console.WriteLine("Delete on DATA");
-//            linkedList.Remove("Alice");
-//            ShowThelist();
-//            Console.WriteLine("DELETE on index");
-//            linkedList.Remove(100);
-//            ShowThelist();
-            //// выводим элементы
-            //ShowThelist();
-            //Console.WriteLine("____________________");
-            //linkedList.Insert("John", 3);
-            //ShowThelist();
-            //Console.WriteLine("____________________");
-            //linkedList.Insert("Walfey", 3);
-            //ShowThelist();
-            //Console.WriteLine("____________________");
-            //linkedList.Move(1, 2);
-            //ShowThelist();
-            //Console.WriteLine("_________________");
-            //linkedList.Move(3, 4);
-            //ShowThelist();
-            //    Console.WriteLine("__________SOMETEST___________");
-            //LinkedList<string> linkedList1 = new LinkedList<string>();
-            //linkedList.Copy();
-            //linkedList1 = linkedList.Copy();
-            //foreach (var item in linkedList1)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            //linkedList1.Add("Matthew");
-            //Console.WriteLine("NEW LIST_____________");
-            //foreach (var item in linkedList1)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            //Console.WriteLine("OLD LIST_____________");
-            //ShowThelist();
-            
+
 
             Console.ReadKey();
+
+            void ShowTheMainTeam()
+            {
+                int i = 0;
+                Console.WriteLine("Main team:");
+                foreach (var item in main_team)
+                {
+                    i++;
+                    Console.WriteLine("{0}){1}", i, item.surname);
+                }
+            }
+            void ShowTheHelpTeam()
+            {
+                int i = 0;
+                Console.WriteLine("Help team:");
+                foreach (var item in help_team)
+                {
+                    i++;
+                    Console.WriteLine("{0}){1}", i, item.surname);
+                }
+            }
         }
     }
 }
