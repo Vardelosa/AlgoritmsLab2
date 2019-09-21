@@ -49,10 +49,17 @@ namespace AlgoritmsLaba2
                     i++;
                     current = current.Next;                 
                 }
+            if (current == null)
+            {
+                Add(data);
+            }
+            else
+            {
                 next = current.Next;
                 current.Next = node;
                 node.Next = next;
                 count++;
+            }
 
         }    
         
@@ -285,7 +292,7 @@ namespace AlgoritmsLaba2
     {
         static void Main(string[] args)
         {
-           
+           //Создаем футболистов
             LinkedList<Footballer> main_team = new LinkedList<Footballer>();
             LinkedList<Footballer> help_team = new LinkedList<Footballer>();
             Footballer[] footballers_main = new Footballer[3];
@@ -301,7 +308,7 @@ namespace AlgoritmsLaba2
                 main_team.Add(footballers_main[i]);
                 help_team.Add(footballers_help[i]);
             }
-            ShowTheMainTeam();
+            ShowTheMainTeam();//Методы, выводящий элементы списка
             ShowTheHelpTeam();
             Console.WriteLine("How many changes do you want to make?");
             int k = Convert.ToInt32(Console.ReadLine());
@@ -309,7 +316,7 @@ namespace AlgoritmsLaba2
             {
                 Console.WriteLine("Enter index of the person in the main team");
                 int ind = Convert.ToInt32(Console.ReadLine())-1;
-                if (ind > 2)
+                if (ind > 2)//Делаем так, чтоб пользователь не вылез за границы
                     ind = 2;
                 if (ind < 0)
                     ind = 0;
@@ -319,41 +326,63 @@ namespace AlgoritmsLaba2
                     ind1 = 2;
                 if (ind1 < 0)
                     ind1 = 0;
-                main_team.Remove(ind);
+                main_team.Remove(ind);//Удаляем элементы, чтоб совершить замену
                 help_team.Remove(ind1);
-            for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 3; j++)
                 {
                 if(j==ind)
                 {
-                    if (j == 0)
-                        main_team.AppendFirst(footballers_help[j]);
-                    else
-                    main_team.Insert(footballers_help[j], ind-1);
-                }
+                        if (j == 0)//Если элемент первым, то ставим его в начало
+                        {
+                            main_team.AppendFirst(footballers_help[ind1]);
+                        }
+                        else
+                        {
+                            main_team.Insert(footballers_help[ind1], ind-1);
+                        }
+                    }
                 if(j==ind1)
                 {
-                    if (j == 0)
-                        help_team.AppendFirst(footballers_main[j]);
-                    else
-                    help_team.Insert(footballers_main[j], ind1-1);
-                }
-
+                        if (j == 0)
+                        {
+                            help_team.AppendFirst(footballers_main[ind]);
+                        }
+                        else
+                        {
+                            help_team.Insert(footballers_main[ind], ind1-1);
+                        }
+                    }
+                    
                 }
                 Console.Clear();
                 ShowTheMainTeam();
                 ShowTheHelpTeam();
-
+                UpdateTeams();//Метод, обновляющий массив футболистов
             }
 
 
             Console.ReadKey();
-
-            void ShowTheMainTeam()
+            void UpdateTeams()
             {
-                int i = 0;
-                Console.WriteLine("Main team:");
+                int j = 0;
+                int j1 = 0;
                 foreach (var item in main_team)
                 {
+                    footballers_main[j] = item;
+                    j++;                
+                }
+                foreach (var item in help_team)
+                {
+                    footballers_help[j1] = item;
+                    j1++;
+                }
+            }
+            void ShowTheMainTeam()
+            {
+               int i = 0;
+                Console.WriteLine("Main team:");
+                foreach (var item in main_team)
+                {           
                     i++;
                     Console.WriteLine("{0}){1}", i, item.surname);
                 }
